@@ -1,8 +1,8 @@
-const fs = require('fs');
-const minimist = require('minimist');
+const fs = require("fs");
+const minimist = require("minimist");
 
-const entries = require('./config/entries.json');
-const rimraf = require('rimraf');
+const entries = require("./entries.json");
+const rimraf = require("rimraf");
 
 const promisifiedRemove = pageName =>
   new Promise((resolve, reject) => {
@@ -16,7 +16,7 @@ const promisifiedRemove = pageName =>
 
 const readFilePromisified = path => {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (e, result) => {
+    fs.readFile(path, "utf8", (e, result) => {
       if (e) {
         reject(e);
       }
@@ -29,7 +29,7 @@ const writeFile = (path, data) =>
   new Promise((resolve, reject) => {
     if (data === undefined) {
       reject(
-        'When you create file, data is undefined, please check second arg at writeFilePromisified',
+        "When you create file, data is undefined, please check second arg at writeFilePromisified"
       );
     }
     fs.writeFile(path, data, e => {
@@ -42,7 +42,7 @@ const writeFile = (path, data) =>
 
 const removePage = async pageName => {
   if (!pageName) {
-    throw 'Please provide page name as argument `npm run page:remove [name-of-page]`';
+    throw "Please provide page name as argument `npm run page:remove [name-of-page]`";
   }
 
   if (Object.keys(entries).indexOf(pageName) === -1) {
@@ -59,19 +59,19 @@ const removePage = async pageName => {
   await promisifiedRemove(pageName);
 
   fs.writeFile(
-    `./config/entries.json`,
+    `./entries.json`,
     `${JSON.stringify(newEntries, null, 2)}`,
     function(err) {
       if (err) throw err;
       console.log(
-        'Entries updated.' + '<br/>' + JSON.stringify(newEntries, null, 2),
+        "Entries updated." + "<br/>" + JSON.stringify(newEntries, null, 2)
       );
-    },
+    }
   );
 };
 
 module.exports = {
   removePage,
   writeFile,
-  readFilePromisified,
+  readFilePromisified
 };

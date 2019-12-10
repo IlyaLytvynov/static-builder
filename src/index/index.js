@@ -1,6 +1,4 @@
-// import './index.scss';
-import { t } from './app.jsx';
-
-t();
-
-console.log('HELTH CHECK');
+import './index.scss';
+import { run } from './app.jsx';
+run();
+console.log('!!HELTH CHECK!!');
